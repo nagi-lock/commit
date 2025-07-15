@@ -1,23 +1,34 @@
 class Solution {
 public:
-    int dp[1000001][15];
-    int solve(vector<int>& coins, int amount, int ind){
-        if(amount == 0) return 0;
-        if(ind == 0) return INT_MAX-1;
-        if(dp[amount][ind] != -1) return dp[amount][ind];
-        int take = INT_MAX-1;
-        if(coins[ind-1] <= amount){
-            take = 1+ solve(coins, amount-coins[ind-1], ind);
-        }
-        int nottake = solve(coins, amount, ind-1);
-        return dp[amount][ind] =  min(take, nottake);
-    }
+    // int dp[2501][2501];
+    // int solve(vector<int>& nums, int prev, int ind){
 
-    int coinChange(vector<int>& coins, int amount) {
-        memset(dp, -1, sizeof(dp));
-        int ans = solve(coins, amount, coins.size());
-        
-        if(ans == INT_MAX-1) return -1;
-        else return ans;
+    //     if(ind == nums.size()) return 0;
+    //     if(prev != -1 && dp[prev][ind] != -1) return dp[prev][ind];
+    //     int take = 0;
+    //     if(prev == -1 || nums[ind]>nums[prev]){
+    //         take = 1+solve(nums, ind, ind+1);
+    //     }
+    //     int nottake = solve(nums, prev, ind+1);
+    //     if(prev != -1){
+    //         dp[prev][ind] = max(take, nottake);
+    //     }
+    //     return max(take, nottake);
+    // }       
+
+    int lengthOfLIS(vector<int>& nums) {
+        // memset(dp, -1, sizeof(dp));
+        // return solve(nums, -1, 0);
+        vector<int> ans(nums.size(), 1);
+        int maxi = 1;
+        for(int i = 0; i< nums.size(); i++){
+            for(int j = 0; j< i; j++){
+                if(nums[i]>nums[j]){
+                    ans[i] = max(ans[i], ans[j]+1);
+                    maxi = max(maxi, ans[i]);
+                }
+            }
+        }
+        return maxi;
     }
 };
