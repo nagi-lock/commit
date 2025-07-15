@@ -26,6 +26,7 @@ public:
             if (stones[0] <= target / 2)
                 dp[0][wt]=stones[0];
         }
+        
         for(int i=1;i<n;i++){
             for(int wt=0;wt<=target/2;wt++){
                 int pick = 0;
